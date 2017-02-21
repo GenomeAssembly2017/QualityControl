@@ -34,7 +34,6 @@ for ($i = 0; $i < @list; $i += 2){
 	if ($fastqc) { fastqc($r1, $r2); }
 	if ($quiet) { quiet($r1, $r2); }
 	else {
-		print "simple mode\n";
 		`trim_galore --illumina --clip_R1 18 --clip_R2 18 --three_prime_clip_R1 5 --three_prime_clip_R2 5 --length 75 --paired $r1  $r2 -o $outDir 2>$outDir/trim_galore.log`;
 	}
 }
