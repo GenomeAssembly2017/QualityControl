@@ -6,3 +6,4 @@ Following is a list of the files/data in this repository: (Please modify this fi
 
 * `trim_batchf.pl` is a Perl script for running Trim Galore! on a directory containing paired end reads files. Send `trim_batchf.pl` to command line for documentation and usage.
 
+* `visualizeFastQC.R` is an R script for visualizing results obtained from `fastqc_parser.py`.
