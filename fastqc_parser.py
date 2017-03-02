@@ -12,6 +12,15 @@
 # 
 # Usage:
 # python fastqc_parser.py <path to directory>
+#
+# The resulting file looks like:
+#
+# <File Name 1>\t<Field Name 1>\t<Status>
+# <File Name 1>\t<Field Name 1>\t<Status>
+# ...
+# <File Name 2>\t<Field Name 1>\t<Status>
+# <File Name 2>\t<Field Name 2>\t<Status>
+# ...
 
 from HTMLParser import HTMLParser
 from collections import defaultdict
@@ -61,10 +70,11 @@ for fileName in glob.glob(os.path.join(topDir, '*_fastqc.html')):
         parser = MyHTMLParser()
         parser.feed(data)
         thisMap = parser.getFieldsMap() 
-        for field, value in thisMap.iteritems():
-            fieldValues[field].append(value)
+        for fieldName, value in thisMap.iteritems():
+            fieldValues[fieldName].append(value)
 
 with open('results.txt', 'wb') as o:
-    o.write('Fields\t' + '\t'.join(fileList) + '\n')
-    for field in allFields:
-        o.write(field + '\t' + '\t'.join(fieldValues[field]) + '\n')
+    o.write('#File\tField\tStatus\n')
+    for index, fileName in enumerate(fileList):
+        for fieldName in allFields:
+            o.write('%s\t%s\t%s\n'%(fileName, fieldName, fieldValues[fieldName][index]))
